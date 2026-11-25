@@ -1,4 +1,4 @@
-# Fic Bindery — AO3 HTML to EPUB converter
+# FicToEpub — AO3 HTML to EPUB converter
 
 Free, private, in-browser converter that turns the HTML file you download from Archive of Our Own (AO3) into a clean EPUB with chapters, a table of contents, a work-info page and a generated cover. Nothing is uploaded: the EPUB is assembled in your browser.
 
