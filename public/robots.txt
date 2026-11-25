@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://fic-bindery.pages.dev/sitemap.xml

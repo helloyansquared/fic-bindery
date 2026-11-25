@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the public site from src/index.html.
 Usage: python3 build.py https://your-domain/   (trailing slash; a sub-path such as https://user.github.io/fic-bindery/ also works)
-Writes index.html, robots.txt and sitemap.xml next to this script."""
+Writes public/index.html, public/robots.txt and public/sitemap.xml (public/ is what the host serves)."""
 import sys, re, datetime, pathlib
 site = sys.argv[1].rstrip('/') + '/'
 root = pathlib.Path(__file__).parent
@@ -17,7 +17,7 @@ head = (f'<link rel="canonical" href="{site}">\n<link rel="icon" href="favicon.s
         '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">')
 assert '<!--SEO-HEAD-->' in s
 s = s.replace('<!--SEO-HEAD-->', head)
-(root / 'index.html').write_text(s)
-(root / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nSitemap: {site}sitemap.xml\n')
-(root / 'sitemap.xml').write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>{site}</loc><lastmod>{datetime.date.today()}</lastmod></url>\n</urlset>\n')
+(root / 'public/index.html').write_text(s)
+(root / 'public/robots.txt').write_text(f'User-agent: *\nAllow: /\nSitemap: {site}sitemap.xml\n')
+(root / 'public/sitemap.xml').write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>{site}</loc><lastmod>{datetime.date.today()}</lastmod></url>\n</urlset>\n')
 print('built for', site)
