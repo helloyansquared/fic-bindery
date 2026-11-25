@@ -83,6 +83,10 @@ input[type=text],select{font:inherit;font-size:16px;min-height:44px;padding:8px 
 .out .r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 .out .r span{font-size:14px;overflow-wrap:anywhere}.out small{display:block;color:var(--soft)}
 .note{font-size:13px;color:var(--soft);text-align:center;margin:0}
+.tip{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+.tip p{margin:0 0 10px;font-size:14px}.tipbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.tipbtns a{min-height:40px;min-width:64px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:600}
+.tipbtns a:hover,.tipbtns a:focus-visible{border-color:var(--pink);color:var(--pinkink);outline:none}
 .msg{font-size:14px;color:var(--pinkink);margin:0;min-height:1em}
 .band{padding:clamp(36px,5vw,64px) 0}
 .how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:22px;padding:0;list-style:none;counter-reset:s}
@@ -139,6 +143,7 @@ footer{background:var(--cloth2);color:#cdd3f5;font-size:14px;padding:28px 0}foot
     <button class="btn" id="go" type="button">Make EPUB</button>
     <p class="msg" id="msg" role="status"></p>
     <div class="out" id="out"></div>
+    <div class="tip" id="tip" hidden><p>Glad it worked! FicToEpub is free, ad-free and never uploads your files. If it saved your fics, you can leave a tip.</p><div class="tipbtns" id="tipbtns"></div></div>
     <p class="note">EPUB 3 with an EPUB 2 table of contents, so older readers work too.</p>
   </div>
 </section>
@@ -167,7 +172,7 @@ footer{background:var(--cloth2);color:#cdd3f5;font-size:14px;padding:28px 0}foot
 <!-- AD SLOT: after FAQ -->
 </main>
 
-<footer><div class="wrap">FicToEpub is an independent tool and is not affiliated with Archive of Our Own or the Organization for Transformative Works. Fanworks belong to their creators — convert for personal reading only.</div></footer>
+<footer><div class="wrap"><p id="tipfoot" hidden style="margin:0 0 8px">Free, no ads, no tracking. <a id="tiplink" href="#" target="_blank" rel="noopener">Support FicToEpub</a></p>FicToEpub is an independent tool and is not affiliated with Archive of Our Own or the Organization for Transformative Works. Fanworks belong to their creators — convert for personal reading only.</div></footer>
 
 <script id="sample" type="text/plain">
 <html><head><title>The Lantern Under the Pier - harbourlight - Original Work</title></head><body>
@@ -349,6 +354,12 @@ blockquote{margin:.6em 1.2em}.meta{font-size:.92em}.meta blockquote{font-style:n
 /*CORE-END*/
 
 const $ = id => document.getElementById(id);
+const TIP_URL = "https://checkout.dodopayments.com/buy/pdt_0NshyNUp6VOvbCDYHhw7Q"; // Dodo Payments pay-what-you-want checkout link (https://checkout.dodopayments.com/buy/pdt_...)
+const tipHref = a => TIP_URL + "?quantity=1" + (a ? "&paymentAmount=" + a : "");
+if (TIP_URL) {
+  $("tipbtns").innerHTML = [3, 5, 10].map(a => `<a href="${tipHref(a)}" target="_blank" rel="noopener">$${a}</a>`).join("") + `<a href="${tipHref("")}" target="_blank" rel="noopener">Other amount</a>`;
+  $("tiplink").href = tipHref(""); $("tipfoot").hidden = false;
+}
 const parser = new DOMParser(), ser = new XMLSerializer();
 const COLORS = ["#2537b0", "#b0254f", "#1f6b5c", "#3b2f63", "#c25a1b", "#222833"];
 const st = { works: [], sel: 0, merged: false, book: { title: "", author: "", lang: "en", color: COLORS[0] }, sample: true };
@@ -433,6 +444,7 @@ async function make() {
         offer(fname(w.title, w.author), CORE.buildEpub({ title: w.title, author: w.author, lang: w.lang, cover, sections: [{ title: w.title, children: CORE.sectionsFor(fresh(w), w.title, w.author, opt, ser, d) }] }, ser, d));
       }
     }
+    if (TIP_URL) $("tip").hidden = false;
     $("msg").textContent = st.works.length > 1 && !st.merged ? `${st.works.length} EPUBs ready.` : "Your EPUB is ready.";
   } catch (e) { $("msg").textContent = "Something in this file couldn't be converted: " + (e && e.message || e); }
   render();
