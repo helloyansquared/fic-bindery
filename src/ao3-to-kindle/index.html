@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AO3 to Kindle: Send Fics to Your Kindle (Free) | FicToEpub</title>
+<meta name="description" content="How to read AO3 fics on a Kindle: download the work as HTML, convert it to EPUB, then use Amazon's Send to Kindle on the web, in the Kindle app or by email. Size limits and fixes included.">
+<!--SEO-HEAD-->
+<meta property="og:title" content="How to send AO3 fics to Kindle">
+<meta property="og:description" content="AO3 HTML → EPUB → Send to Kindle, step by step. Free, no software to install.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<!--JSONLD-->
+<style>
+/* Same bindery look as the converter page: cobalt cloth band, white paper, pink ribbon accent. */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0e1122);--ink:light-dark(#151826,#eceef8);--soft:light-dark(#5a5f78,#a9aec8);
+--paper:light-dark(#f3f4fb,#171b30);--line:light-dark(#dfe2ef,#2a2f4b);--cloth:#2537b0;--cloth2:light-dark(#1b2a8c,#16205f);--pink:#ff4f87;--pinkink:light-dark(#c4245a,#ff86ab)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Instrument Sans",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.1;text-wrap:balance;margin:0}
+a{color:var(--pinkink)}
+.wrap{max-width:860px;margin:0 auto;padding:0 max(4vw,16px)}
+.top{background:var(--cloth);color:#fff;padding:22px 0 40px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;margin-bottom:30px;color:#fff;text-decoration:none}
+.brand i{width:22px;height:28px;background:#fff;border-radius:2px 5px 5px 2px;box-shadow:inset 4px 0 0 var(--pink)}
+.crumbs{font-size:14px;color:#cdd3f5;margin:0 0 10px}.crumbs a{color:#fff}
+.top h1{font-size:clamp(32px,5vw,48px)}
+.answer{font-size:18px;margin:26px 0 0;padding:16px 18px;border-left:4px solid var(--pink);background:var(--paper);border-radius:0 10px 10px 0}
+.cta{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;margin:18px 0 0;border-radius:12px;background:var(--pink);color:#fff;font-weight:600;text-decoration:none}
+.cta:focus-visible{outline:3px solid var(--cloth);outline-offset:2px}
+section{padding:28px 0;border-bottom:1px solid var(--line)}
+h2{font-size:clamp(26px,3.4vw,34px);margin-bottom:12px}h3{font-size:21px;margin:18px 0 6px}
+ol,ul{padding-left:22px}li{margin:6px 0}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px;margin:10px 0}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}thead th{color:var(--soft);font-weight:600}
+.note{font-size:15px;color:var(--soft)}
+details{border-bottom:1px solid var(--line);padding:6px 0}summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}details p{margin:4px 0 14px;color:var(--soft)}
+footer{background:var(--cloth2);color:#cdd3f5;font-size:14px;padding:28px 0;margin-top:30px}footer a{color:#fff}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><i></i>FicToEpub</a>
+  <p class="crumbs"><a href="/">AO3 HTML to EPUB converter</a> › AO3 to Kindle</p>
+  <h1>How to send AO3 fics to Kindle</h1>
+</div></header>
+
+<main class="wrap">
+  <p class="answer">To read an AO3 fic on a Kindle, download the work from AO3 as HTML (<em>Entire Work → Download → HTML</em>), convert it to EPUB with FicToEpub, then send the EPUB with Amazon's Send to Kindle: on the web at amazon.com/sendtokindle, from the Kindle app, or by email. It's free, and the book shows up in your Kindle library a few minutes later.</p>
+  <a class="cta" href="/">Convert your AO3 HTML to EPUB</a>
+  <p class="note">Last updated 25 November 2026</p>
+
+  <section id="convert">
+    <h2>Step 1: Turn the AO3 download into an EPUB</h2>
+    <p>Normally AO3 offers EPUB and AZW3 downloads for e-readers. Since AO3 came back from its outage on 15 November 2026, readers report that only the HTML download works, so convert that file first:</p>
+    <ol>
+      <li>On the work, click <em>Entire Work</em>, then <em>Download → HTML</em>.</li>
+      <li>Open <a href="/">FicToEpub</a> and drop the HTML file in. The title, author, chapters, tags and summary are read from the file.</li>
+      <li>Press <em>Make EPUB</em> and save the file. Nothing is uploaded: the EPUB is built in your browser.</li>
+    </ol>
+    <p>Skip MOBI: Amazon no longer supports it for Send to Kindle. EPUB is the format to use.</p>
+  </section>
+
+  <section id="send">
+    <h2>Step 2: Send the EPUB to your Kindle</h2>
+    <p>Amazon's Send to Kindle accepts EPUB files and converts them for your device. Pick whichever of the three ways is easiest:</p>
+
+    <h3>On the web (easiest on a computer)</h3>
+    <ol>
+      <li>Go to amazon.com/sendtokindle and sign in with the Amazon account your Kindle uses.</li>
+      <li>Drag the EPUB in, or choose it from your files. Files can be up to 200 MB.</li>
+      <li>Leave <em>Add to your library</em> on, pick your Kindle, and send.</li>
+    </ol>
+
+    <h3>From the Kindle app (easiest on a phone)</h3>
+    <ol>
+      <li>Install the free Kindle app for iOS or Android and sign in.</li>
+      <li>Find the saved EPUB in your Files or Downloads app and tap <em>Share</em>.</li>
+      <li>Choose <em>Kindle</em> in the share sheet, then send.</li>
+    </ol>
+
+    <h3>By email</h3>
+    <ol>
+      <li>Find your Send to Kindle address (it ends in @kindle.com) under <em>Manage Your Content and Devices → Preferences → Personal Document Settings</em>.</li>
+      <li>On the same page, add the email you'll send from to the <em>Approved Personal Document Email List</em>. Mail from other addresses is ignored.</li>
+      <li>Attach the EPUB and send it to your @kindle.com address. Amazon may email you once to confirm.</li>
+    </ol>
+
+    <div class="scroll"><table>
+      <thead><tr><th>Method</th><th>Size limit</th><th>Best for</th></tr></thead>
+      <tbody>
+        <tr><td>Send to Kindle for Web</td><td>200 MB per file</td><td>Computers, long fics and big series</td></tr>
+        <tr><td>Kindle app (iOS, Android)</td><td>Follows the app's limit</td><td>Reading on the go from your phone</td></tr>
+        <tr><td>Email to @kindle.com</td><td>50 MB per email, up to 25 attachments</td><td>Sending several fics at once</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Limits from Amazon's <a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=G5WYD9SAF7PGXRNA">Send to Kindle help page</a>.</p>
+  </section>
+
+  <section id="fix">
+    <h2>If the fic doesn't show up on your Kindle</h2>
+    <ul>
+      <li><b>Sent by email?</b> Check that the address you sent from is on the Approved Personal Document Email List, and that you used the @kindle.com address of the right device.</li>
+      <li><b>Give it a few minutes,</b> then sync your Kindle with Wi-Fi turned on.</li>
+      <li><b>Check your library filters.</b> Personal documents can be listed separately from books you bought.</li>
+      <li><b>File too big for email?</b> Use Send to Kindle for Web, which takes files up to 200 MB.</li>
+      <li><b>Amazon rejected the file?</b> Make a fresh EPUB in FicToEpub and try again. Its output passes EPUBCheck in our tests.</li>
+    </ul>
+  </section>
+
+  <section id="faq">
+    <h2>AO3 to Kindle: questions</h2>
+    <details open><summary>Can I send the AO3 HTML file straight to my Kindle?</summary><p>You can, because Send to Kindle accepts HTML. But converting to EPUB first gives you a proper cover, the title and author in your Kindle library, and a chapter list you can jump around with.</p></details>
+    <details><summary>Does Send to Kindle work with EPUB files?</summary><p>Yes. Amazon has accepted EPUB through Send to Kindle since 2022 and converts it to Kindle format during delivery.</p></details>
+    <details><summary>Does sending fics to Kindle cost anything?</summary><p>No. FicToEpub is free, and Amazon's Send to Kindle is free for personal documents.</p></details>
+    <details><summary>Can I put a whole series on my Kindle as one book?</summary><p>Yes. Add every work's HTML file to FicToEpub in reading order, choose <em>Merge into one book</em>, then send the single EPUB to your Kindle.</p></details>
+    <details><summary>Why can't I download the AO3 EPUB or AZW3 directly?</summary><p>AO3 temporarily limited downloads to HTML while it restores features after its October–November 2026 outage. Once AO3 brings the other formats back you can download AZW3 or EPUB again; until then, convert the HTML.</p></details>
+  </section>
+
+  <section id="more" style="border-bottom:0">
+    <h2>Read on something other than a Kindle?</h2>
+    <p>Kobo, Apple Books, Google Play Books, Boox and KOReader open the EPUB directly, with no Send to Kindle step. <a href="/">Make your EPUB here</a>.</p>
+  </section>
+</main>
+
+<footer><div class="wrap"><p style="margin:0 0 8px"><a href="/">AO3 HTML to EPUB converter</a> · Made by <a href="https://www.tumblr.com/yesyanyan">yesyanyan</a> · <a href="https://github.com/helloyansquared/fic-bindery">open source on GitHub</a></p>FicToEpub is an independent tool and is not affiliated with Archive of Our Own, the Organization for Transformative Works or Amazon. Kindle is a trademark of Amazon. Fanworks belong to their creators — convert for personal reading only.</div></footer>
+</body>
+</html>

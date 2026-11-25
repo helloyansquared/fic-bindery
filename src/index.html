@@ -12,15 +12,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-[{"@context":"https://schema.org","@type":"WebApplication","name":"FicToEpub – AO3 HTML to EPUB Converter","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"How do I convert an AO3 HTML download to EPUB?","acceptedAnswer":{"@type":"Answer","text":"On the work page choose Entire Work, then Download and HTML. Drop that file on this page, check the title and author, and press Make EPUB. The EPUB is built in your browser."}},
-{"@type":"Question","name":"Is my file uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The converter runs entirely in your browser. The HTML file and the finished EPUB never leave your device."}},
-{"@type":"Question","name":"Can I read the EPUB on a Kindle?","acceptedAnswer":{"@type":"Answer","text":"Yes. Amazon's Send to Kindle accepts EPUB files by email, app or web upload and converts them for your Kindle."}},
-{"@type":"Question","name":"Can I merge several fics or a series into one EPUB?","acceptedAnswer":{"@type":"Answer","text":"Yes. Add the HTML files in reading order and switch to Merge into one book. Each work keeps its own chapters in the table of contents."}}
-]}]
-</script>
+<!--JSONLD-->
 <style>
 /* VOICE  friendly bindery: calm, exact, a little bookish
    IDEA   a bookbinder's bench: loose pages go in on the left, a bound book comes out on the right
@@ -80,6 +72,12 @@ input[type=text],select{font:inherit;font-size:16px;min-height:44px;padding:8px 
 .tipnote{display:block;margin-top:8px;font-size:13px;color:var(--soft)}
 .tipbtns a:hover,.tipbtns a:focus-visible{border-color:var(--pink);color:var(--pinkink);outline:none}
 .msg{font-size:14px;color:var(--pinkink);margin:0;min-height:1em}
+.scroll{overflow-x:auto}
+.answer{font-size:18px;max-width:70ch;margin:14px 0 0;padding:14px 16px;border-left:4px solid var(--pink);background:var(--paper);border-radius:0 10px 10px 0}
+.cmp{border-collapse:collapse;width:100%;margin:16px 0;font-size:15px;min-width:560px}.cmp th,.cmp td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+.cmp thead th{font-weight:600;color:var(--soft)}.cmp tbody th{font-weight:500}.cmp td:nth-child(2){font-weight:600}
+.facts{padding-left:20px;max-width:75ch}.facts li{margin:6px 0}.updated{font-size:14px;color:var(--soft);margin:6px 0 10px}
+.guides{padding-left:20px}.guides li{margin:6px 0}
 .band{padding:clamp(36px,5vw,64px) 0}
 .how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:22px;padding:0;list-style:none;counter-reset:s}
 .how li{counter-increment:s;border-top:3px solid var(--cloth);padding-top:14px}
@@ -141,30 +139,70 @@ footer{background:var(--cloth2);color:#cdd3f5;font-size:14px;padding:28px 0}foot
 </section>
 <!-- AD SLOT: below tool (keep it out of the bench) -->
 
-<section class="band">
-  <h2>How to convert an AO3 HTML download to EPUB</h2>
+<section class="band" id="how-to">
+  <h2>How do I convert AO3 HTML to EPUB?</h2>
+  <p class="answer">To convert an AO3 HTML download to EPUB, open the work on AO3, click <em>Entire Work</em>, then <em>Download → HTML</em>. Drop that file into FicToEpub and press <em>Make EPUB</em>. The EPUB is built in your browser with chapters, a table of contents and a cover. Nothing is uploaded, and you don't need an account or any software.</p>
   <ol class="how">
     <li><h3>Download the HTML</h3>On the work, click <em>Entire Work</em>, then <em>Download → HTML</em>. Logged-in-only works download the same way once you're signed in.</li>
     <li><h3>Drop it here</h3>The title, author, chapters, tags and notes are read straight from the file. Fix the title or pick a cover colour if you like.</li>
-    <li><h3>Make the EPUB</h3>Press <em>Make EPUB</em> and save the file. Open it in Apple Books, Kobo, Google Play Books, KOReader — or send it to your Kindle.</li>
+    <li><h3>Make the EPUB</h3>Press <em>Make EPUB</em> and save the file. Open it in Apple Books, Kobo, Google Play Books or KOReader, or <a href="/ao3-to-kindle/">send it to your Kindle</a>.</li>
   </ol>
 </section>
 
-<section class="band alt"><div class="faq">
+<section class="band alt" id="compare">
+  <h2>FicToEpub vs Calibre vs upload-based converters</h2>
+  <p>All three can turn an AO3 HTML file into an EPUB. They differ in what you install and where your file goes.</p>
+  <div class="scroll"><table class="cmp">
+    <thead><tr><th></th><th>FicToEpub</th><th>Calibre</th><th>Upload-based online converters</th></tr></thead>
+    <tbody>
+      <tr><th>Install needed</th><td>No</td><td>Yes, desktop app</td><td>No</td></tr>
+      <tr><th>Works on phones</th><td>Yes</td><td>No</td><td>Usually</td></tr>
+      <tr><th>Your file is uploaded</th><td>No, converted in your browser</td><td>No, runs on your computer</td><td>Yes, sent to their server</td></tr>
+      <tr><th>AO3 chapters become a table of contents</th><td>Yes, from AO3's chapter headings</td><td>Usually, via heading detection</td><td>Varies</td></tr>
+      <tr><th>AO3 tags, summary and notes kept</th><td>Yes, on a work info page</td><td>Kept as text</td><td>Varies</td></tr>
+      <tr><th>Merge several fics into one book</th><td>Yes</td><td>With the EpubMerge plugin</td><td>Rarely</td></tr>
+      <tr><th>Price</th><td>Free</td><td>Free</td><td>Often free with limits</td></tr>
+    </tbody>
+  </table></div>
+  <p>In Calibre: add the .html file, select it, click <em>Convert books</em> and choose EPUB as the output format.</p>
+</section>
+
+<section class="band" id="facts">
+  <h2>What FicToEpub does, in short</h2>
+  <ul class="facts">
+    <li><b>0 files uploaded.</b> The conversion runs in your browser.</li>
+    <li><b>EPUB 3</b> with an EPUB 2 (NCX) table of contents, so older e-readers work too. Our test files pass EPUBCheck.</li>
+    <li><b>Reads AO3's structure:</b> chapter titles, tags, summary, notes and end notes.</li>
+    <li><b>Makes a cover</b> from the title and author, in your choice of colour.</li>
+    <li><b>Merges</b> several works or a whole series into one book.</li>
+    <li><b>20 languages</b> for the book's language setting.</li>
+    <li><b>No account, no ads,</b> and the code is <a href="https://github.com/helloyansquared/fic-bindery">open source on GitHub</a>.</li>
+  </ul>
+</section>
+
+<section class="band alt" id="faq"><div class="faq">
   <h2>AO3 HTML to EPUB: common questions</h2>
-  <details open><summary>Why is AO3 only giving me HTML right now?</summary><p>As of late November 2026, many readers report that AO3 downloads are HTML-only while features are being restored after the recent outage (AO3 came back on November 15 after 17 days offline). Check AO3's official status posts for the latest. HTML is perfectly good input: this page turns it into the EPUB you'd normally get.</p></details>
+  <p class="updated">Last updated 25 November 2026</p>
+  <details open id="html-only"><summary>Why is AO3 only letting me download HTML?</summary><p>Because AO3 has temporarily limited downloads to HTML while it restores features after its October–November 2026 outage. AO3 came back on November 15 after 17 days offline, and as of 25 November 2026 readers still report that only the HTML option works. Check AO3's official status posts for the latest. The HTML file is perfectly good input: this page turns it into the EPUB you'd normally get.</p></details>
+  <details><summary>How do I send an AO3 fic to my Kindle?</summary><p>Convert the AO3 HTML to EPUB here, then send the EPUB with Amazon's Send to Kindle: on the web at amazon.com/sendtokindle, from the Kindle app, or by email. Amazon converts it for your Kindle. See the step-by-step <a href="/ao3-to-kindle/">AO3 to Kindle guide</a>.</p></details>
   <details><summary>Is my file uploaded anywhere?</summary><p>No. The converter is plain JavaScript running on this page. Your HTML file is read in your browser and the EPUB is assembled there, so it never touches a server. No ads, no trackers.</p></details>
-  <details><summary>Do I need Calibre?</summary><p>No. Calibre works too, but this page needs no install and works on phones and tablets as well as computers.</p></details>
+  <details><summary>Can I convert HTML to EPUB online without uploading the file?</summary><p>Yes. FicToEpub works online in your browser but processes the file locally, so the HTML never leaves your device. Most other online converters upload your file to their server first.</p></details>
+  <details><summary>Do I need Calibre?</summary><p>No. Calibre works well on a computer (add the HTML, click Convert books, choose EPUB), but this page needs no install and also works on phones and tablets.</p></details>
   <details><summary>Does this site download fics from AO3 for me?</summary><p>No, and on purpose. You download the work yourself through AO3's own button, so the author's hit count and the archive's rules stay intact. Please keep converted files for your own reading and leave kudos and comments on AO3.</p></details>
-  <details><summary>Will it work on my Kindle?</summary><p>Yes. Amazon's Send to Kindle takes EPUB files by email, through the Kindle app or on the web, and converts them for your device. Kobo, Apple Books, Google Play Books, Boox and KOReader open the EPUB directly.</p></details>
-  <details><summary>Can I combine a series or several fics?</summary><p>Add the HTML files in reading order (use the arrows to reorder), choose <em>Merge into one book</em> and give the book a title. Each work keeps its own chapters under its name in the table of contents.</p></details>
-  <details><summary>Does it work with HTML that isn't from AO3?</summary><p>Yes. Any saved HTML page or story works: the converter uses the page title, and if the text has two or more section headings it splits chapters there.</p></details>
+  <details><summary>Will the EPUB open on Kobo, Apple Books or Google Play Books?</summary><p>Yes. Kobo, Apple Books, Google Play Books, Boox and KOReader open the EPUB directly. Kindle readers send it with Send to Kindle first.</p></details>
+  <details><summary>Can I combine a series or several fics into one EPUB?</summary><p>Yes. Add the HTML files in reading order (use the arrows to reorder), choose <em>Merge into one book</em> and give the book a title. Each work keeps its own chapters under its name in the table of contents.</p></details>
+  <details><summary>Can I turn any HTML file or saved webpage into an EPUB?</summary><p>Yes. Any saved HTML page or story works: the converter uses the page title, and if the text has two or more section headings it splits chapters there.</p></details>
   <details><summary>What happens to images?</summary><p>Images that live on other websites can't be fetched from a file, so each one is replaced with a short note giving its description. Text, italics, footnotes and links come through.</p></details>
 </div></section>
+
+<section class="band" id="guides">
+  <h2>More guides</h2>
+  <ul class="guides"><li><a href="/ao3-to-kindle/">How to send AO3 fics to Kindle</a>: the three Send to Kindle methods, size limits and fixes.</li></ul>
+</section>
 <!-- AD SLOT: after FAQ -->
 </main>
 
-<footer><div class="wrap"><p id="tipfoot" hidden style="margin:0 0 8px">Free, no ads, no tracking. <a id="tiplink" href="#" target="_blank" rel="noopener">Support FicToEpub</a></p>FicToEpub is an independent tool and is not affiliated with Archive of Our Own or the Organization for Transformative Works. Fanworks belong to their creators — convert for personal reading only.</div></footer>
+<footer><div class="wrap"><p id="tipfoot" hidden style="margin:0 0 8px">Free, no ads, no tracking. <a id="tiplink" href="#" target="_blank" rel="noopener">Support FicToEpub</a></p><p style="margin:0 0 8px">Made by <a href="https://www.tumblr.com/yesyanyan">yesyanyan</a> · <a href="https://github.com/helloyansquared/fic-bindery">open source on GitHub</a> · <a href="/ao3-to-kindle/">AO3 to Kindle guide</a> · Last updated 25 November 2026</p>FicToEpub is an independent tool and is not affiliated with Archive of Our Own or the Organization for Transformative Works. Fanworks belong to their creators — convert for personal reading only.</div></footer>
 
 <script id="sample" type="text/plain">
 <html><head><title>The Lantern Under the Pier - harbourlight - Original Work</title></head><body>

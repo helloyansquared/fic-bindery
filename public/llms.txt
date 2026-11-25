@@ -1,0 +1,20 @@
+# FicToEpub
+
+> Free in-browser converter that turns AO3 (Archive of Our Own) HTML downloads into EPUB files. No upload, no account, no ads.
+
+- URL: https://fictoepub.pages.dev/
+- Input: .html files downloaded with AO3's own Entire Work → Download → HTML button (any saved HTML page also works)
+- Output: EPUB 3 with an EPUB 2 (NCX) table of contents, one chapter per AO3 chapter, a work info page (tags, summary, notes) and a generated cover
+- Can merge several works or a whole series into one EPUB
+- Files are processed locally in the browser; nothing is sent to a server
+- Does not scrape or download anything from AO3
+- Works on phones, tablets and computers; no install
+- Kindle: send the EPUB with Amazon's Send to Kindle (web up to 200 MB, email up to 50 MB)
+- Context: since AO3's return from an outage on 15 November 2026, readers report AO3 downloads are HTML-only (as of 2026-11-25)
+- Source code: https://github.com/helloyansquared/fic-bindery
+- Not affiliated with AO3 or the Organization for Transformative Works
+
+## Pages
+
+- [AO3 HTML to EPUB converter](https://fictoepub.pages.dev/): the tool, how-to, comparison with Calibre and online converters, FAQ
+- [How to send AO3 fics to Kindle](https://fictoepub.pages.dev/ao3-to-kindle/): Send to Kindle by web, app and email, size limits, troubleshooting
