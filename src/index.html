@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AO3 HTML to EPUB Converter – Free, No Upload | Fic Bindery</title>
+<meta name="description" content="Turn the HTML file you downloaded from AO3 into a clean EPUB with chapters, table of contents and a cover. Free, runs in your browser, nothing is uploaded. Works with Kindle, Kobo and Apple Books.">
+<!--SEO-HEAD-->
+<meta property="og:title" content="AO3 HTML to EPUB Converter – free, private, in your browser">
+<meta property="og:description" content="Drop the AO3 HTML download, get an EPUB with chapters and a table of contents. Nothing leaves your device.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[{"@context":"https://schema.org","@type":"WebApplication","name":"Fic Bindery – AO3 HTML to EPUB Converter","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"How do I convert an AO3 HTML download to EPUB?","acceptedAnswer":{"@type":"Answer","text":"On the work page choose Entire Work, then Download and HTML. Drop that file on this page, check the title and author, and press Make EPUB. The EPUB is built in your browser."}},
+{"@type":"Question","name":"Is my file uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The converter runs entirely in your browser. The HTML file and the finished EPUB never leave your device."}},
+{"@type":"Question","name":"Can I read the EPUB on a Kindle?","acceptedAnswer":{"@type":"Answer","text":"Yes. Amazon's Send to Kindle accepts EPUB files by email, app or web upload and converts them for your Kindle."}},
+{"@type":"Question","name":"Can I merge several fics or a series into one EPUB?","acceptedAnswer":{"@type":"Answer","text":"Yes. Add the HTML files in reading order and switch to Merge into one book. Each work keeps its own chapters in the table of contents."}}
+]}]
+</script>
+<style>
+/* VOICE  friendly bindery: calm, exact, a little bookish
+   IDEA   a bookbinder's bench: loose pages go in on the left, a bound book comes out on the right
+   PICTURE the live cover of the book you're making, drawn on canvas, sitting on the bench
+   COLOUR cobalt book cloth, white paper, one hot pink ribbon accent; night = cloth under lamplight
+   TYPE   Fraunces for titles (book-cover lettering), Instrument Sans for everything else
+   LAYOUT cobalt band with title, the bench (tool) overlapping it, then how-to and FAQ in one column */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0e1122);--ink:light-dark(#151826,#eceef8);--soft:light-dark(#5a5f78,#a9aec8);
+--paper:light-dark(#f3f4fb,#171b30);--line:light-dark(#dfe2ef,#2a2f4b);--cloth:#2537b0;--cloth2:light-dark(#1b2a8c,#16205f);--pink:#ff4f87;--pinkink:light-dark(#c4245a,#ff86ab)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Instrument Sans",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;line-height:1.08;text-wrap:balance;margin:0}
+a{color:var(--pinkink)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(4vw,16px)}
+.top{background:var(--cloth);color:#fff;padding:22px 0 120px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;margin-bottom:38px}
+.brand i{width:22px;height:28px;background:#fff;border-radius:2px 5px 5px 2px;box-shadow:inset 4px 0 0 var(--pink)}
+.top h1{font-size:clamp(34px,5vw,52px);max-width:15ch}
+.top p{max-width:60ch;font-size:17px;color:#dfe4ff;margin:14px 0 0}
+.bench{margin-top:-92px;background:var(--bg);border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 60px -30px rgba(10,20,80,.35);
+display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);overflow:hidden}
+.pages{padding:24px;display:grid;gap:18px;align-content:start}
+.book{background:var(--paper);padding:24px;display:grid;gap:16px;align-content:start;justify-items:center;border-left:1px solid var(--line)}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:22px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s}
+.drop.over,.drop:hover{border-color:var(--cloth);background:light-dark(#eef0ff,#1a2048)}
+.drop b{display:block;font-size:18px}.drop span{color:var(--soft);font-size:14px}
+.files{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.files li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.files li.sel{border-color:var(--cloth);box-shadow:inset 3px 0 0 var(--cloth)}
+.files .t{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.files .m{font-size:13px;color:var(--soft)}
+.files .acts{display:flex;gap:4px}
+.ib{width:36px;height:36px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;font-size:15px;cursor:pointer}
+.ib:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,.seg button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.seg button{flex:1;min-height:40px;border:0;border-radius:7px;background:none;color:var(--ink);font:inherit;font-weight:500;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--cloth);color:#fff}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+label.f{display:grid;gap:4px;font-size:14px;font-weight:500}
+input[type=text],select{font:inherit;font-size:16px;min-height:44px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);width:100%}
+.opts{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px}.opts label{display:flex;gap:7px;align-items:center;min-height:32px}
+.opts input{width:18px;height:18px;accent-color:var(--cloth)}
+.editing{font-size:13px;color:var(--soft);margin:0}
+.cover{width:min(250px,70%);aspect-ratio:2/3;border-radius:3px 8px 8px 3px;box-shadow:-6px 0 0 -2px rgba(0,0,0,.18) inset,0 24px 40px -18px rgba(0,0,30,.55);display:block}
+.sw{display:flex;gap:8px}.sw button{width:30px;height:30px;border-radius:50%;border:2px solid var(--bg);outline:1px solid var(--line);cursor:pointer}
+.sw button[aria-pressed=true]{outline:3px solid var(--pink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:12px;border:0;background:var(--pink);color:#fff;font:inherit;font-weight:600;font-size:17px;cursor:pointer;text-decoration:none}
+.btn.ghost{background:var(--cloth);font-size:15px;min-height:44px}
+.btn:disabled{opacity:.5;cursor:default}
+.out{width:100%;display:grid;gap:8px}
+.out .r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.out .r span{font-size:14px;overflow-wrap:anywhere}.out small{display:block;color:var(--soft)}
+.note{font-size:13px;color:var(--soft);text-align:center;margin:0}
+.msg{font-size:14px;color:var(--pinkink);margin:0;min-height:1em}
+.band{padding:clamp(36px,5vw,64px) 0}
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:22px;padding:0;list-style:none;counter-reset:s}
+.how li{counter-increment:s;border-top:3px solid var(--cloth);padding-top:14px}
+.how li::before{content:"Step " counter(s);display:block;font-weight:600;color:var(--pinkink);font-size:14px;margin-bottom:4px}
+.how h3{font-size:21px;margin-bottom:6px}
+h2{font-size:clamp(28px,3.4vw,38px)}
+.faq{max-width:760px}.faq details{border-bottom:1px solid var(--line);padding:6px 0}
+.faq summary{cursor:pointer;font-weight:600;font-size:17px;min-height:44px;display:flex;align-items:center}
+.faq p{margin:4px 0 14px;color:var(--soft)}
+.alt{background:var(--paper)}
+footer{background:var(--cloth2);color:#cdd3f5;font-size:14px;padding:28px 0}footer a{color:#fff}
+@media(max-width:860px){.bench{grid-template-columns:minmax(0,1fr)}.book{border-left:0;border-top:1px solid var(--line)}.cover{width:min(200px,60%)}.how{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.grid2{grid-template-columns:minmax(0,1fr)}.pages,.book{padding:16px}.top{padding-bottom:110px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand"><i></i>Fic Bindery</div>
+  <h1>AO3 HTML to EPUB converter</h1>
+  <p>Drop the HTML file you downloaded from Archive of Our Own and get a proper EPUB back — chapters, table of contents, work info and a cover. It all happens in your browser; nothing is uploaded.</p>
+</div></header>
+
+<main class="wrap">
+<section class="bench" aria-label="Converter">
+  <div class="pages">
+    <label class="drop" id="drop" tabindex="0">
+      <b>Drop AO3 .html files here</b>
+      <span>or click to choose · several files work too</span>
+      <input type="file" id="pick" accept=".html,.htm,text/html" multiple hidden>
+    </label>
+    <ul class="files" id="files"></ul>
+    <p class="editing" id="sampleNote">Sample story loaded so you can see how it works — add your own file to replace it.</p>
+    <div class="seg" role="group" aria-label="Output">
+      <button type="button" id="mSep" aria-pressed="true">One EPUB per file</button>
+      <button type="button" id="mMerge" aria-pressed="false">Merge into one book</button>
+    </div>
+    <p class="editing" id="editing"></p>
+    <div class="grid2">
+      <label class="f">Title<input type="text" id="fTitle" autocomplete="off"></label>
+      <label class="f">Author<input type="text" id="fAuthor" autocomplete="off"></label>
+    </div>
+    <label class="f">Language<select id="fLang"></select></label>
+    <div class="opts">
+      <label><input type="checkbox" id="oInfo" checked>Work info page (tags, summary, notes)</label>
+      <label><input type="checkbox" id="oEnd" checked>End notes</label>
+      <label><input type="checkbox" id="oCover" checked>Cover</label>
+    </div>
+  </div>
+  <div class="book">
+    <canvas id="cv" class="cover" width="600" height="900" aria-label="Cover preview"></canvas>
+    <div class="sw" id="sw" role="group" aria-label="Cover colour"></div>
+    <button class="btn" id="go" type="button">Make EPUB</button>
+    <p class="msg" id="msg" role="status"></p>
+    <div class="out" id="out"></div>
+    <p class="note">EPUB 3 with an EPUB 2 table of contents, so older readers work too.</p>
+  </div>
+</section>
+<!-- AD SLOT: below tool (keep it out of the bench) -->
+
+<section class="band">
+  <h2>How to convert an AO3 HTML download to EPUB</h2>
+  <ol class="how">
+    <li><h3>Download the HTML</h3>On the work, click <em>Entire Work</em>, then <em>Download → HTML</em>. Logged-in-only works download the same way once you're signed in.</li>
+    <li><h3>Drop it here</h3>The title, author, chapters, tags and notes are read straight from the file. Fix the title or pick a cover colour if you like.</li>
+    <li><h3>Make the EPUB</h3>Press <em>Make EPUB</em> and save the file. Open it in Apple Books, Kobo, Google Play Books, KOReader — or send it to your Kindle.</li>
+  </ol>
+</section>
+
+<section class="band alt"><div class="faq">
+  <h2>AO3 HTML to EPUB: common questions</h2>
+  <details open><summary>Why is AO3 only giving me HTML right now?</summary><p>As of late November 2026, many readers report that AO3 downloads are HTML-only while features are being restored after the recent outage (AO3 came back on November 15 after 17 days offline). Check AO3's official status posts for the latest. HTML is perfectly good input: this page turns it into the EPUB you'd normally get.</p></details>
+  <details><summary>Is my file uploaded anywhere?</summary><p>No. The converter is plain JavaScript running on this page. Your HTML file is read in your browser and the EPUB is assembled there, so it never touches a server. No ads, no trackers.</p></details>
+  <details><summary>Do I need Calibre?</summary><p>No. Calibre works too, but this page needs no install and works on phones and tablets as well as computers.</p></details>
+  <details><summary>Does this site download fics from AO3 for me?</summary><p>No, and on purpose. You download the work yourself through AO3's own button, so the author's hit count and the archive's rules stay intact. Please keep converted files for your own reading and leave kudos and comments on AO3.</p></details>
+  <details><summary>Will it work on my Kindle?</summary><p>Yes. Amazon's Send to Kindle takes EPUB files by email, through the Kindle app or on the web, and converts them for your device. Kobo, Apple Books, Google Play Books, Boox and KOReader open the EPUB directly.</p></details>
+  <details><summary>Can I combine a series or several fics?</summary><p>Add the HTML files in reading order (use the arrows to reorder), choose <em>Merge into one book</em> and give the book a title. Each work keeps its own chapters under its name in the table of contents.</p></details>
+  <details><summary>Does it work with HTML that isn't from AO3?</summary><p>Yes. Any saved HTML page or story works: the converter uses the page title, and if the text has two or more section headings it splits chapters there.</p></details>
+  <details><summary>What happens to images?</summary><p>Images that live on other websites can't be fetched from a file, so each one is replaced with a short note giving its description. Text, italics, footnotes and links come through.</p></details>
+</div></section>
+<!-- AD SLOT: after FAQ -->
+</main>
+
+<footer><div class="wrap">Fic Bindery is an independent tool and is not affiliated with Archive of Our Own or the Organization for Transformative Works. Fanworks belong to their creators — convert for personal reading only.</div></footer>
+
+<script id="sample" type="text/plain">
+<html><head><title>The Lantern Under the Pier - harbourlight - Original Work</title></head><body>
+<div id="preface"><p class="message"><b>Archive of Our Own</b><br>Posted originally on the Archive of Our Own.</p>
+<div class="meta"><dl class="tags"><dt>Rating:</dt><dd>General Audiences</dd><dt>Fandom:</dt><dd>Original Work</dd><dt>Language:</dt><dd>English</dd><dt>Stats:</dt><dd>Published: 2026-11-02 Words: 412 Chapters: 2/2</dd></dl>
+<h1>The Lantern Under the Pier</h1><div class="byline">by <a rel="author" href="https://example.com">harbourlight</a></div>
+<p>Summary</p><blockquote class="userstuff"><p>A ferry clerk finds a lantern that only lights when someone is lost.</p></blockquote></div></div>
+<div id="chapters" class="userstuff">
+<div class="meta group"><h2 class="heading">Chapter 1: Low Tide</h2></div>
+<div class="userstuff"><p>The lantern was wedged between two pilings, dry despite the tide, and it was glowing the colour of weak tea.</p><p>Mara, who had sold ferry tickets for eleven years and believed in very little, picked it up anyway.</p><p><em>Someone's lost,</em> she thought, and was surprised to find she was sure of it.</p></div>
+<div class="meta group"><h2 class="heading">Chapter 2: The Last Ferry</h2></div>
+<div class="userstuff"><p>The boy on the last ferry had a ticket for a town that had been renamed before he was born.</p><p>The lantern brightened as she walked toward him. "I think this is yours," Mara said, and the light went soft and steady, like a held breath let go.</p></div>
+</div>
+<div id="afterword"><div class="meta"><p>End Notes</p><blockquote class="userstuff"><p>Thanks for reading! This is a sample work used to demonstrate the converter.</p></blockquote></div></div>
+</body></html>
+</script>
+
+<script>
+{
+/*CORE-START*/
+const CORE = (() => {
+  const LANGS = [["en","English"],["es","Español"],["zh","中文"],["ja","日本語"],["ko","한국어"],["ru","Русский"],["fr","Français"],["de","Deutsch"],["pt","Português"],["it","Italiano"],["pl","Polski"],["id","Bahasa Indonesia"],["vi","Tiếng Việt"],["th","ไทย"],["tr","Türkçe"],["nl","Nederlands"],["uk","Українська"],["ar","العربية"],["sv","Svenska"],["fi","Suomi"]];
+  const LANG_HINTS = [[/^english/i,"en"],[/^espa/i,"es"],[/中文|普通话|國語|粵語/,"zh"],[/日本語/,"ja"],[/한국어/,"ko"],[/русск/i,"ru"],[/fran/i,"fr"],[/deutsch/i,"de"],[/portugu/i,"pt"],[/italiano/i,"it"],[/polski/i,"pl"],[/indonesia/i,"id"],[/việt/i,"vi"],[/ไทย/,"th"],[/türk/i,"tr"],[/nederlands/i,"nl"],[/українськ/i,"uk"],[/العربية/,"ar"],[/svenska/i,"sv"],[/suomi/i,"fi"]];
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const DROP = "script,style,link,meta,iframe,object,embed,form,input,button,select,textarea,noscript,svg,video,audio,canvas,base,head,title";
+  const OK_ATTR = new Set(["href","id","class","title","lang","dir","style","alt","colspan","rowspan","start","reversed","datetime","cite","abbr","scope"]);
+  const RENAME = {center:"div",font:"span",big:"span",strike:"s",tt:"code",blink:"span",marquee:"div",main:"div",article:"div",section:"div",nav:"div",header:"div",footer:"div",aside:"div"};
+  const OK_EL = new Set("a abbr address b bdi bdo blockquote br caption cite code col colgroup dd del dfn div dl dt em figcaption figure h1 h2 h3 h4 h5 h6 hr i ins kbd li mark ol p pre q rp rt ruby s samp small span strong sub sup table tbody td tfoot th thead time tr u ul var wbr".split(" "));
+  const PHRASE = "p,h1,h2,h3,h4,h5,h6,span,b,i,em,strong,u,s,small,sub,sup,q,cite,code,mark,abbr,dfn,kbd,samp,var,time,bdi,bdo,ruby,dt,pre";
+  const BADCH = /[\u0000-\u0008\u000B\u000C\u000E-\u001F￾￿]/g;
+
+  function clean(root, doc) {
+    root.querySelectorAll(DROP).forEach(n => n.remove());
+    const tw = doc.createTreeWalker(root, 128); const cm = []; while (tw.nextNode()) cm.push(tw.currentNode); cm.forEach(c => c.remove());
+    root.querySelectorAll("img").forEach(img => { const alt = (img.getAttribute("alt") || "").trim(); const s = doc.createElement("span"); s.className = "img-note"; s.textContent = "[Image" + (alt ? ": " + alt : "") + "]"; img.replaceWith(s); });
+    for (const el of Array.from(root.querySelectorAll("*")).reverse()) {
+      let tag = el.localName, node = el;
+      if (RENAME[tag]) { node = doc.createElement(RENAME[tag]); for (const a of Array.from(el.attributes)) node.setAttribute(a.name, a.value); while (el.firstChild) node.appendChild(el.firstChild); el.replaceWith(node); tag = RENAME[tag]; }
+      if (!OK_EL.has(tag)) { node.replaceWith(...Array.from(node.childNodes)); continue; }
+      for (const a of Array.from(node.attributes)) {
+        if (!OK_ATTR.has(a.name) || !/^[a-z][a-z0-9_-]*$/i.test(a.name)) node.removeAttribute(a.name);
+        else if (a.name === "href" && !/^(https?:|mailto:|#)/i.test(a.value.trim())) node.removeAttribute("href");
+        else if (a.name === "id" && !/^[A-Za-z_][\w.-]*$/.test(a.value)) node.removeAttribute("id");
+      }
+      if (["div","p","blockquote","ul","ol","dl","hr","pre","h1","h2","h3","h4","h5","h6","figure","address"].includes(tag) && node.parentElement && node.parentElement.closest(PHRASE)) {
+        if (tag === "div" || tag === "p") { const sp = doc.createElement("span"); for (const a of Array.from(node.attributes)) sp.setAttribute(a.name, a.value); while (node.firstChild) sp.appendChild(node.firstChild); node.replaceWith(sp); }
+        else node.replaceWith(...Array.from(node.childNodes));
+        continue;
+      }
+      if (tag === "a" && node.hasAttribute("href") && /^https?:/i.test(node.getAttribute("href")) && !/^https?:\/\/[^\s"<>]+$/i.test(node.getAttribute("href"))) node.removeAttribute("href");
+    }
+  }
+  const text = n => (n ? n.textContent : "").replace(/\s+/g, " ").trim();
+
+  function parseWork(html, fileName, parser) {
+    const doc = parser.parseFromString(html, "text/html");
+    const body = doc.body || doc.documentElement;
+    const pre = doc.querySelector("#preface"), box = doc.querySelector("#chapters");
+    let title = "", author = "", lang = "", info = null, end = null, chapters = [];
+    const docTitle = text(doc.querySelector("title"));
+    if (pre && box) {
+      title = text(pre.querySelector("h1")) || docTitle.split(" - ")[0];
+      const by = pre.querySelectorAll(".byline a[rel=author]");
+      author = by.length ? Array.from(by).map(text).join(" & ") : text(pre.querySelector(".byline")).replace(/^by\s+/i, "") || (docTitle.split(" - ")[1] || "");
+      pre.querySelectorAll("dl.tags dt").forEach(dt => { if (/language/i.test(dt.textContent)) { const v = text(dt.nextElementSibling); for (const [re, c] of LANG_HINTS) if (re.test(v)) { lang = c; break; } } });
+      clean(body, doc);
+      info = [pre];
+      const kids = Array.from(box.children); let cur = null;
+      if (box.querySelector("h2.heading")) {
+        for (const k of kids) {
+          const h = k.matches("h2.heading") ? k : k.querySelector("h2.heading");
+          if (h) { cur = { title: text(h) || "Chapter", nodes: [k] }; chapters.push(cur); }
+          else { if (!cur) { cur = { title, nodes: [] }; chapters.push(cur); } cur.nodes.push(k); }
+        }
+      } else {
+        const h = doc.createElement("h2"); h.className = "heading"; h.textContent = title;
+        chapters = [{ title, nodes: [h, ...kids.length ? kids : [box]] }];
+      }
+      const aw = doc.querySelector("#afterword");
+      if (aw) { aw.querySelectorAll("#footer").forEach(n => n.remove()); if (text(aw)) end = [aw]; }
+    } else {
+      title = text(doc.querySelector("h1")) || docTitle || fileName.replace(/\.html?$/i, "");
+      author = (doc.querySelector('meta[name="author"]') || { getAttribute: () => "" }).getAttribute("content") || "";
+      const dl = (doc.documentElement.getAttribute("lang") || "").slice(0, 2).toLowerCase(); if (LANGS.some(l => l[0] === dl)) lang = dl;
+      clean(body, doc);
+      let c = body; while (c.children.length === 1 && !Array.from(c.childNodes).some(n => n.nodeType === 3 && n.textContent.trim())) c = c.children[0];
+      const kids = Array.from(c.childNodes);
+      const lvl = ["h2", "h1", "h3"].find(t => kids.filter(k => k.localName === t).length >= 2);
+      if (lvl) {
+        let cur = null;
+        for (const k of kids) {
+          if (k.localName === lvl) { cur = { title: text(k) || "Section", nodes: [k] }; chapters.push(cur); }
+          else if (cur) cur.nodes.push(k);
+          else if (k.textContent.trim()) { cur = { title: "Opening", nodes: [k] }; chapters.push(cur); }
+        }
+      } else {
+        const h = doc.createElement("h2"); h.textContent = title; chapters = [{ title, nodes: [h, ...kids] }];
+      }
+    }
+    if (!title) title = "Untitled";
+    return { title, author, lang: lang || "en", info, end, chapters, words: text(box || body).split(" ").length };
+  }
+
+  function bodyXhtml(nodes, ser, doc) {
+    const wrap = doc.createElement("div");
+    for (const n of nodes) wrap.appendChild(n.cloneNode(true));
+    const seen = new Set();
+    wrap.querySelectorAll("[id]").forEach(e => { const id = e.getAttribute("id"); if (seen.has(id)) e.removeAttribute("id"); else seen.add(id); });
+    wrap.querySelectorAll('a[href^="#"]').forEach(a => { if (!seen.has(a.getAttribute("href").slice(1))) a.removeAttribute("href"); });
+    return Array.from(wrap.childNodes).map(n => ser.serializeToString(n)).join("\n").replace(BADCH, "");
+  }
+
+  const page = (title, lang, body, cls) => `<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE html>\n<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="${lang}" lang="${lang}">\n<head><meta charset="UTF-8"/><title>${esc(title)}</title><link rel="stylesheet" type="text/css" href="style.css"/></head>\n<body${cls ? ` class="${cls}"` : ""}>\n${body}\n</body>\n</html>`;
+
+  const CSS = `body{font-family:serif;line-height:1.5;margin:0 4%}h1,h2{text-align:center;line-height:1.2;margin:1.5em 0 .8em}h1{font-size:1.6em}h2{font-size:1.3em}p{margin:0 0 .8em}
+blockquote{margin:.6em 1.2em}.meta{font-size:.92em}.meta blockquote{font-style:normal}dl.tags dt{font-weight:bold;margin-top:.4em}dl.tags dd{margin:0 0 0 1em}
+.message{font-size:.85em;text-align:center;opacity:.75}.byline{text-align:center;margin-bottom:1.5em}.img-note{font-style:italic;opacity:.7}
+.cover{margin:0;padding:0;text-align:center}.cover img{max-width:100%;max-height:100%}.endnotes,.meta.group{font-size:.92em}`;
+
+  // book: {title, author, lang, cover: Uint8Array|null, sections:[{title, children:[{title, body, cls}] , body?, cls?}]}
+  function buildEpub(book, ser, doc) {
+    const L = book.lang || "en", files = [], manifest = [], spine = [], toc = [];
+    let n = 0;
+    const add = (title, body, cls) => { n++; const f = `p${String(n).padStart(3, "0")}.xhtml`; files.push({ name: "OEBPS/" + f, data: page(title, L, body, cls) }); manifest.push(`<item id="p${n}" href="${f}" media-type="application/xhtml+xml"/>`); spine.push(`<itemref idref="p${n}"/>`); return f; };
+    if (book.cover) {
+      files.push({ name: "OEBPS/cover.png", data: book.cover });
+      files.push({ name: "OEBPS/cover.xhtml", data: page("Cover", L, `<div class="cover"><img src="cover.png" alt="${esc(book.title)}"/></div>`, "cover") });
+      manifest.push(`<item id="cover-image" href="cover.png" media-type="image/png" properties="cover-image"/>`, `<item id="cover" href="cover.xhtml" media-type="application/xhtml+xml"/>`);
+      spine.push(`<itemref idref="cover"/>`);
+    }
+    for (const s of book.sections) {
+      const entry = { title: s.title, file: null, kids: [] };
+      if (s.body) entry.file = add(s.title, s.body, s.cls);
+      for (const c of s.children || []) { const f = add(c.title, c.body, c.cls); if (!entry.file) entry.file = f; entry.kids.push({ title: c.title, file: f }); }
+      if (entry.file) toc.push(entry);
+    }
+    const flat = toc.length === 1 && toc[0].kids.length > 0 && !book.sections[0].body ? toc[0].kids.map(k => ({ ...k, kids: [] })) : toc;
+    const navLi = e => `<li><a href="${e.file}">${esc(e.title)}</a>${e.kids && e.kids.length ? `<ol>${e.kids.map(navLi).join("")}</ol>` : ""}</li>`;
+    files.push({ name: "OEBPS/nav.xhtml", data: page("Contents", L, `<nav epub:type="toc" id="toc"><h1>Contents</h1><ol>${flat.map(navLi).join("")}</ol></nav>`) });
+    let po = 0, ni = 0; const ord = new Map(); const np = e => { ni++; if (!ord.has(e.file)) ord.set(e.file, ++po); return `<navPoint id="n${ni}" playOrder="${ord.get(e.file)}"><navLabel><text>${esc(e.title)}</text></navLabel><content src="${e.file}"/>${(e.kids || []).map(np).join("")}</navPoint>`; };
+    const uid = "urn:uuid:" + (crypto.randomUUID ? crypto.randomUUID() : "00000000-0000-4000-8000-" + Date.now().toString(16).padStart(12, "0").slice(-12));
+    const ncxMap = flat.map(np).join("");
+    files.push({ name: "OEBPS/toc.ncx", data: `<?xml version="1.0" encoding="UTF-8"?>\n<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1"><head><meta name="dtb:uid" content="${uid}"/><meta name="dtb:depth" content="2"/><meta name="dtb:totalPageCount" content="0"/><meta name="dtb:maxPageNumber" content="0"/></head><docTitle><text>${esc(book.title)}</text></docTitle><navMap>${ncxMap}</navMap></ncx>` });
+    files.push({ name: "OEBPS/style.css", data: CSS });
+    const mod = new Date().toISOString().replace(/\.\d+Z$/, "Z");
+    const opf = `<?xml version="1.0" encoding="UTF-8"?>\n<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="${L}">\n<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="bookid">${uid}</dc:identifier><dc:title>${esc(book.title)}</dc:title>${book.author ? `<dc:creator>${esc(book.author)}</dc:creator>` : ""}<dc:language>${L}</dc:language><meta property="dcterms:modified">${mod}</meta>${book.cover ? '<meta name="cover" content="cover-image"/>' : ""}</metadata>\n<manifest><item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/><item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/><item id="css" href="style.css" media-type="text/css"/>${manifest.join("")}</manifest>\n<spine toc="ncx">${spine.join("")}</spine>\n</package>`;
+    return zip([{ name: "mimetype", data: "application/epub+zip" }, { name: "META-INF/container.xml", data: `<?xml version="1.0" encoding="UTF-8"?>\n<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>` }, { name: "OEBPS/content.opf", data: opf }, ...files]);
+  }
+
+  // works: [{parsed, title, author}], merged: bool, opt: {info, end}
+  function sectionsFor(p, title, author, opt, ser, doc) {
+    const kids = [];
+    if (opt.info && p.info) kids.push({ title: "Work info", body: bodyXhtml(p.info, ser, doc), cls: "info" });
+    p.chapters.forEach(c => kids.push({ title: c.title, body: bodyXhtml(c.nodes, ser, doc) }));
+    if (opt.end && p.end) kids.push({ title: "End notes", body: bodyXhtml(p.end, ser, doc), cls: "end" });
+    return kids;
+  }
+
+  const CRC = (() => { const t = new Uint32Array(256); for (let i = 0; i < 256; i++) { let c = i; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[i] = c >>> 0; } return t; })();
+  const crc32 = b => { let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = CRC[(c ^ b[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+  function zip(list) {
+    const enc = new TextEncoder(), parts = [], cen = []; let off = 0;
+    const d = new Date(), tm = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), dt = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+    for (const f of list) {
+      const nm = enc.encode(f.name), data = typeof f.data === "string" ? enc.encode(f.data) : f.data, crc = crc32(data), fl = /^[\x20-\x7e]*$/.test(f.name) ? 0 : 0x0800;
+      const h = new DataView(new ArrayBuffer(30));
+      h.setUint32(0, 0x04034b50, true); h.setUint16(4, 10, true); h.setUint16(6, fl, true); h.setUint16(10, tm, true); h.setUint16(12, dt, true); h.setUint32(14, crc, true); h.setUint32(18, data.length, true); h.setUint32(22, data.length, true); h.setUint16(26, nm.length, true);
+      parts.push(new Uint8Array(h.buffer), nm, data);
+      const c = new DataView(new ArrayBuffer(46));
+      c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 10, true); c.setUint16(8, fl, true); c.setUint16(12, tm, true); c.setUint16(14, dt, true); c.setUint32(16, crc, true); c.setUint32(20, data.length, true); c.setUint32(24, data.length, true); c.setUint16(28, nm.length, true); c.setUint32(42, off, true);
+      cen.push(new Uint8Array(c.buffer), nm); off += 30 + nm.length + data.length;
+    }
+    const cs = cen.reduce((a, b) => a + b.length, 0), e = new DataView(new ArrayBuffer(22));
+    e.setUint32(0, 0x06054b50, true); e.setUint16(8, list.length, true); e.setUint16(10, list.length, true); e.setUint32(12, cs, true); e.setUint32(16, off, true);
+    const all = [...parts, ...cen, new Uint8Array(e.buffer)], out = new Uint8Array(all.reduce((a, b) => a + b.length, 0)); let p = 0; for (const a of all) { out.set(a, p); p += a.length; } return out;
+  }
+  return { LANGS, parseWork, buildEpub, sectionsFor, esc };
+})();
+/*CORE-END*/
+
+const $ = id => document.getElementById(id);
+const parser = new DOMParser(), ser = new XMLSerializer();
+const COLORS = ["#2537b0", "#b0254f", "#1f6b5c", "#3b2f63", "#c25a1b", "#222833"];
+const st = { works: [], sel: 0, merged: false, book: { title: "", author: "", lang: "en", color: COLORS[0] }, sample: true };
+let dl = null;
+try { if (window.claude && window.claude.use) window.claude.use("downloads").then(n => { dl = n; }).catch(() => {}); } catch (e) {}
+
+$("fLang").innerHTML = CORE.LANGS.map(([c, n]) => `<option value="${c}">${CORE.esc(n)}</option>`).join("");
+$("sw").innerHTML = COLORS.map(c => `<button type="button" data-c="${c}" style="background:${c}" aria-label="Cover colour ${c}"></button>`).join("");
+const target = () => st.merged ? st.book : st.works[st.sel];
+const hash = s => { let h = 0; for (const ch of s) h = (h * 31 + ch.codePointAt(0)) | 0; return Math.abs(h); };
+
+function addWork(html, name) {
+  const p = CORE.parseWork(html, name, parser);
+  st.works.push({ name, html, p, title: p.title, author: p.author, lang: p.lang, color: COLORS[hash(p.title) % COLORS.length] });
+}
+function render() {
+  $("files").innerHTML = st.works.map((w, i) => `<li data-i="${i}" class="${!st.merged && i === st.sel ? "sel" : ""}"><div><div class="t">${CORE.esc(w.title)}</div><div class="m">${CORE.esc(w.author || "Unknown author")} · ${w.p.chapters.length} chapter${w.p.chapters.length > 1 ? "s" : ""} · ${CORE.esc(w.name)}</div></div><div class="acts"><button class="ib" data-a="up" aria-label="Move up">↑</button><button class="ib" data-a="down" aria-label="Move down">↓</button><button class="ib" data-a="del" aria-label="Remove">✕</button></div></li>`).join("");
+  $("sampleNote").hidden = !st.sample;
+  $("mSep").setAttribute("aria-pressed", !st.merged); $("mMerge").setAttribute("aria-pressed", st.merged);
+  const t = target();
+  $("go").disabled = !t;
+  if (!t) { $("editing").textContent = "Add an HTML file to start."; drawCover("", "", COLORS[0]); return; }
+  $("editing").textContent = st.merged ? `Editing the merged book (${st.works.length} works)` : st.works.length > 1 ? `Editing: file ${st.sel + 1} of ${st.works.length} — click a file to edit it` : "Check the details below:";
+  $("fTitle").value = t.title; $("fAuthor").value = t.author; $("fLang").value = t.lang;
+  $("sw").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.c === t.color));
+  drawCover(t.title, t.author, t.color);
+}
+function tokens(s) { return Array.from(s.matchAll(/[぀-ヿ㐀-鿿가-힯]|[^\s぀-ヿ㐀-鿿가-힯]+|\s+/g), m => m[0]); }
+function wrapText(x, s, max) {
+  const lines = []; let cur = "";
+  for (const tk of tokens(s)) { const t2 = cur + tk; if (x.measureText(t2.trim()).width > max && cur.trim()) { lines.push(cur.trim()); cur = tk.trim() ? tk : ""; } else cur = t2; }
+  if (cur.trim()) lines.push(cur.trim()); return lines;
+}
+function drawCover(title, author, color) {
+  const cv = $("cv"), x = cv.getContext("2d"), W = 600, H = 900;
+  x.fillStyle = color; x.fillRect(0, 0, W, H);
+  const g = x.createLinearGradient(0, 0, W, 0); g.addColorStop(0, "rgba(0,0,0,.28)"); g.addColorStop(.06, "rgba(255,255,255,.08)"); g.addColorStop(.1, "rgba(0,0,0,0)"); x.fillStyle = g; x.fillRect(0, 0, W, H);
+  x.strokeStyle = "rgba(255,255,255,.6)"; x.lineWidth = 3; x.strokeRect(46, 46, W - 80, H - 92); x.lineWidth = 1; x.strokeRect(58, 58, W - 104, H - 116);
+  x.fillStyle = "#fff"; x.textAlign = "center"; x.textBaseline = "alphabetic";
+  let size = 70, lines = [];
+  for (; size >= 28; size -= 4) { x.font = `700 ${size}px Fraunces, Georgia, serif`; lines = wrapText(x, title || "Untitled", W - 170); if (lines.length * size * 1.12 <= H * .44) break; }
+  const lh = size * 1.12, y0 = H * .40 - (lines.length * lh) / 2 + size * .8;
+  lines.forEach((l, i) => x.fillText(l, W / 2 + 6, y0 + i * lh));
+  const yr = y0 + lines.length * lh + 18; x.fillStyle = "#ff4f87"; x.fillRect(W / 2 - 34, yr, 80, 4);
+  x.fillStyle = "rgba(255,255,255,.92)"; x.font = `500 30px "Instrument Sans", system-ui, sans-serif`;
+  wrapText(x, author || "", W - 190).slice(0, 2).forEach((l, i) => x.fillText(l, W / 2 + 6, yr + 58 + i * 40));
+}
+async function coverBytes(t) {
+  if (!$("oCover").checked) return null;
+  drawCover(t.title, t.author, t.color);
+  const b = await new Promise(r => $("cv").toBlob(r, "image/png"));
+  render();
+  return b ? new Uint8Array(await b.arrayBuffer()) : null;
+}
+const fname = (t, a) => ((t || "book") + (a ? " - " + a : "")).replace(/[\\/:*?"<>|\u0000-\u001f]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 120) + ".epub";
+
+function offer(name, bytes) {
+  const blob = new Blob([bytes], { type: "application/epub+zip" }), url = URL.createObjectURL(blob);
+  const r = document.createElement("div"); r.className = "r";
+  const s = document.createElement("span"); s.textContent = name; const sm = document.createElement("small"); sm.textContent = (bytes.length / 1024).toFixed(0) + " KB"; s.appendChild(sm);
+  const a = document.createElement("a"); a.className = "btn ghost"; a.href = url; a.download = name; a.textContent = "Save";
+  a.addEventListener("click", async e => {
+    if (!dl) return; e.preventDefault();
+    try { await dl.save({ filename: name, data: blob }); sm.textContent = "Saved"; }
+    catch (err) { sm.textContent = err && err.code === "declined" ? "Not saved" : err && err.code === "rate_limited" ? "One moment, then try again" : "Saving isn't available in this view"; }
+  });
+  r.append(s, a); $("out").appendChild(r);
+}
+async function make() {
+  $("out").innerHTML = ""; $("msg").textContent = ""; $("go").disabled = true;
+  const opt = { info: $("oInfo").checked, end: $("oEnd").checked };
+  try {
+    const fresh = w => CORE.parseWork(w.html, w.name, parser);
+    if (st.merged) {
+      const b = st.book, d = parser.parseFromString("<p></p>", "text/html");
+      const sections = st.works.map(w => ({ title: w.title, children: CORE.sectionsFor(fresh(w), w.title, w.author, opt, ser, d) }));
+      offer(fname(b.title, b.author), CORE.buildEpub({ title: b.title, author: b.author, lang: b.lang, cover: await coverBytes(b), sections }, ser, d));
+    } else {
+      for (const w of st.works) {
+        const d = parser.parseFromString("<p></p>", "text/html");
+        const cover = await (async () => { const keep = st.sel; st.sel = st.works.indexOf(w); const c = await coverBytes(w); st.sel = keep; return c; })();
+        offer(fname(w.title, w.author), CORE.buildEpub({ title: w.title, author: w.author, lang: w.lang, cover, sections: [{ title: w.title, children: CORE.sectionsFor(fresh(w), w.title, w.author, opt, ser, d) }] }, ser, d));
+      }
+    }
+    $("msg").textContent = st.works.length > 1 && !st.merged ? `${st.works.length} EPUBs ready.` : "Your EPUB is ready.";
+  } catch (e) { $("msg").textContent = "Something in this file couldn't be converted: " + (e && e.message || e); }
+  render();
+}
+async function addFiles(list) {
+  const fs = Array.from(list).filter(f => /\.html?$/i.test(f.name) || f.type === "text/html");
+  if (!fs.length) { $("msg").textContent = "Please choose .html files (on AO3: Download → HTML)."; return; }
+  if (st.sample) { st.works = []; st.sample = false; }
+  for (const f of fs) { try { addWork(await f.text(), f.name); } catch (e) { $("msg").textContent = `Couldn't read ${f.name}.`; } }
+  if (!st.book.title && st.works[0]) Object.assign(st.book, { title: st.works[0].title, author: st.works[0].author, lang: st.works[0].lang });
+  st.sel = st.works.length - 1; $("out").innerHTML = ""; $("msg").textContent = ""; render();
+}
+
+$("pick").addEventListener("change", e => { addFiles(e.target.files); e.target.value = ""; });
+$("drop").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("pick").click(); } });
+["dragenter", "dragover"].forEach(t => document.addEventListener(t, e => { e.preventDefault(); $("drop").classList.add("over"); }));
+["dragleave", "drop"].forEach(t => document.addEventListener(t, e => { e.preventDefault(); if (t === "drop" || !e.relatedTarget) $("drop").classList.remove("over"); }));
+document.addEventListener("drop", e => { if (e.dataTransfer && e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
+$("files").addEventListener("click", e => {
+  const li = e.target.closest("li"); if (!li) return; const i = +li.dataset.i, a = e.target.closest("button")?.dataset.a, W = st.works;
+  if (a === "up" && i > 0) [W[i - 1], W[i]] = [W[i], W[i - 1]], st.sel = i - 1;
+  else if (a === "down" && i < W.length - 1) [W[i + 1], W[i]] = [W[i], W[i + 1]], st.sel = i + 1;
+  else if (a === "del") { W.splice(i, 1); st.sel = Math.max(0, Math.min(st.sel, W.length - 1)); if (!W.length) st.merged = false; }
+  else st.sel = i;
+  render();
+});
+$("mSep").addEventListener("click", () => { st.merged = false; render(); });
+$("mMerge").addEventListener("click", () => { st.merged = true; if (!st.book.title && st.works[0]) Object.assign(st.book, { title: st.works[0].title, author: st.works[0].author, lang: st.works[0].lang }); render(); });
+$("fTitle").addEventListener("input", e => { const t = target(); if (t) { t.title = e.target.value; drawCover(t.title, t.author, t.color); const li = $("files").querySelector(".sel .t"); if (li && !st.merged) li.textContent = t.title; } });
+$("fAuthor").addEventListener("input", e => { const t = target(); if (t) { t.author = e.target.value; drawCover(t.title, t.author, t.color); } });
+$("fLang").addEventListener("change", e => { const t = target(); if (t) t.lang = e.target.value; });
+$("sw").addEventListener("click", e => { const c = e.target.dataset.c, t = target(); if (c && t) { t.color = c; render(); } });
+$("go").addEventListener("click", make);
+
+addWork($("sample").textContent, "sample-ao3-download.html");
+st.book.title = ""; render();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
+}
+</script>
+</body>
+</html>
