@@ -122,6 +122,6 @@ urls = [build_page(*p) for p in PAGES]
 ## Also by the same maker
 
 - [FicWrapped](https://ficwrapped.pages.dev/): AO3 Wrapped, your year in fic from your own AO3 History
-- [BotToBook](https://bottobook.pages.dev/): Character.AI data export to PDF and EPUB books
+- [BotToBook](https://bottobook.yansquared.com/): Character.AI data export to PDF and EPUB books
 """)
 print('built for', SITE, '->', ', '.join(urls))
