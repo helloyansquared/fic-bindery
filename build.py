@@ -118,5 +118,10 @@ urls = [build_page(*p) for p in PAGES]
 
 - [AO3 HTML to EPUB converter]({SITE}): the tool, how-to, comparison with Calibre and online converters, FAQ
 - [How to send AO3 fics to Kindle]({SITE}ao3-to-kindle/): Send to Kindle by web, app and email, size limits, troubleshooting
+
+## Also by the same maker
+
+- [FicWrapped](https://ficwrapped.pages.dev/): AO3 Wrapped, your year in fic from your own AO3 History
+- [BotToBook](https://bottobook.pages.dev/): Character.AI data export to PDF and EPUB books
 """)
 print('built for', SITE, '->', ', '.join(urls))
