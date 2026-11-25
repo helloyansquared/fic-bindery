@@ -77,6 +77,7 @@ input[type=text],select{font:inherit;font-size:16px;min-height:44px;padding:8px 
 .tip{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
 .tip p{margin:0 0 10px;font-size:14px}.tipbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 .tipbtns a{min-height:40px;min-width:64px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:600}
+.tipnote{display:block;margin-top:8px;font-size:13px;color:var(--soft)}
 .tipbtns a:hover,.tipbtns a:focus-visible{border-color:var(--pink);color:var(--pinkink);outline:none}
 .msg{font-size:14px;color:var(--pinkink);margin:0;min-height:1em}
 .band{padding:clamp(36px,5vw,64px) 0}
@@ -134,7 +135,7 @@ footer{background:var(--cloth2);color:#cdd3f5;font-size:14px;padding:28px 0}foot
     <button class="btn" id="go" type="button">Make EPUB</button>
     <p class="msg" id="msg" role="status"></p>
     <div class="out" id="out"></div>
-    <div class="tip" id="tip" hidden><p>Glad it worked! FicToEpub is free, ad-free and never uploads your files. If it saved your fics, you can leave a tip.</p><div class="tipbtns" id="tipbtns"></div></div>
+    <div class="tip" id="tip" hidden><p>Glad it worked! The converter is free and always will be, and tips are optional. If it saved your fics, you can leave one.</p><div class="tipbtns" id="tipbtns"></div><small class="tipnote">Tax included. You may be charged in your local currency.</small></div>
     <p class="note">EPUB 3 with an EPUB 2 table of contents, so older readers work too.</p>
   </div>
 </section>
