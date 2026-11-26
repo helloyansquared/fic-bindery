@@ -2,7 +2,7 @@
 
 > Free in-browser converter that turns AO3 (Archive of Our Own) HTML downloads into EPUB files. No upload, no account, no ads.
 
-- URL: https://fictoepub.pages.dev/
+- URL: https://fictoepub.yansquared.com/
 - Input: .html files downloaded with AO3's own Entire Work → Download → HTML button (any saved HTML page also works)
 - Output: EPUB 3 with an EPUB 2 (NCX) table of contents, one chapter per AO3 chapter, a work info page (tags, summary, notes) and a generated cover
 - Can merge several works or a whole series into one EPUB
@@ -16,9 +16,9 @@
 
 ## Pages
 
-- [AO3 HTML to EPUB converter](https://fictoepub.pages.dev/): the tool, how-to, comparison with Calibre and online converters, FAQ
-- [How to send AO3 fics to Kindle](https://fictoepub.pages.dev/ao3-to-kindle/): Send to Kindle by web, app and email, size limits, troubleshooting
-- [AO3 EPUB download not working](https://fictoepub.pages.dev/ao3-epub-download-not-working/): why AO3 downloads are HTML-only since November 2026, dated timeline, three ways to get an e-book now
+- [AO3 HTML to EPUB converter](https://fictoepub.yansquared.com/): the tool, how-to, comparison with Calibre and online converters, FAQ
+- [How to send AO3 fics to Kindle](https://fictoepub.yansquared.com/ao3-to-kindle/): Send to Kindle by web, app and email, size limits, troubleshooting
+- [AO3 EPUB download not working](https://fictoepub.yansquared.com/ao3-epub-download-not-working/): why AO3 downloads are HTML-only since November 2026, dated timeline, three ways to get an e-book now
 
 ## Best for
 - Readers who downloaded an AO3 work as HTML and want an EPUB for an e-reader or reading app, especially on a phone or tablet.

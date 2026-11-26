@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build the public site from src/.
-Usage: python3 build.py https://fictoepub.pages.dev/   (site root, trailing slash)
+Usage: python3 build.py https://fictoepub.yansquared.com/   (site root, trailing slash)
 Writes public/<page>, public/robots.txt, public/sitemap.xml and public/llms.txt.
 public/ is what the host serves (Cloudflare Pages: build command empty, output directory `public`).
 

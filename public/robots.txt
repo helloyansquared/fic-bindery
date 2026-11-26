@@ -16,4 +16,4 @@ User-agent: DuckAssistBot
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://fictoepub.pages.dev/sitemap.xml
+Sitemap: https://fictoepub.yansquared.com/sitemap.xml
