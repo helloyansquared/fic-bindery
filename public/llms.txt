@@ -38,7 +38,7 @@ Because AO3 has temporarily limited downloads to HTML while it restores features
 Convert the AO3 HTML to EPUB here, then send the EPUB with Amazon's Send to Kindle: on the web at amazon.com/sendtokindle, from the Kindle app, or by email. Amazon converts it for your Kindle. See the step-by-step AO3 to Kindle guide.
 
 ### Is my file uploaded anywhere?
-No. The converter is plain JavaScript running on this page. Your HTML file is read in your browser and the EPUB is assembled there, so it never touches a server. No ads, cookies or third-party trackers; the site only counts anonymously which website sent each visit (for example Google or Tumblr), never your files.
+No. The converter is plain JavaScript running on this page. Your HTML file is read in your browser and the EPUB is assembled there, so it never touches a server. No ads, cookies or third-party trackers; the site only counts anonymously which website sent each visit (for example Google or Tumblr), never your files. Those counts, and the optional “how did you find us” answer, are kept for 180 days in a Cloudflare database, with no IP address or ID.
 
 ### Can I convert HTML to EPUB online without uploading the file?
 Yes. FicToEpub works online in your browser but processes the file locally, so the HTML never leaves your device. Most other online converters upload your file to their server first.
