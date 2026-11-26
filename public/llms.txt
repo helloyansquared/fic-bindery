@@ -10,7 +10,7 @@
 - Does not scrape or download anything from AO3
 - Works on phones, tablets and computers; no install
 - Kindle: send the EPUB with Amazon's Send to Kindle (web up to 200 MB, email up to 50 MB)
-- Context: since AO3's return from an outage on 15 November 2026, readers report AO3 downloads are HTML-only (as of 2026-11-25)
+- Context: since AO3's return from an outage on 15 November 2026, AO3 downloads are HTML-only; AO3's own notice says works can only be downloaded in HTML format (checked 2026-11-26)
 - Source code: https://github.com/helloyansquared/fic-bindery
 - Not affiliated with AO3 or the Organization for Transformative Works
 
@@ -18,6 +18,81 @@
 
 - [AO3 HTML to EPUB converter](https://fictoepub.pages.dev/): the tool, how-to, comparison with Calibre and online converters, FAQ
 - [How to send AO3 fics to Kindle](https://fictoepub.pages.dev/ao3-to-kindle/): Send to Kindle by web, app and email, size limits, troubleshooting
+- [AO3 EPUB download not working](https://fictoepub.pages.dev/ao3-epub-download-not-working/): why AO3 downloads are HTML-only since November 2026, dated timeline, three ways to get an e-book now
+
+## Best for
+- Readers who downloaded an AO3 work as HTML and want an EPUB for an e-reader or reading app, especially on a phone or tablet.
+- Merging several AO3 works or a series into one EPUB without installing software.
+
+## Not the right tool for
+- Fetching works from AO3 by link: FicToEpub never downloads from AO3 (use AO3's own button).
+- People who already manage their library in Calibre on a computer: Calibre converts the same HTML.
+- After AO3 restores its own EPUB and AZW3 downloads, which need no conversion.
+
+## Questions and answers
+
+### Why is AO3 only letting me download HTML?
+Because AO3 has temporarily limited downloads to HTML while it restores features after its October–November 2026 outage. AO3 came back on November 15 after 17 days offline, and as of 26 November 2026 AO3's own notice still says works can only be downloaded in HTML format. See what changed and the dated timeline. The HTML file is perfectly good input: this page turns it into the EPUB you'd normally get.
+
+### How do I send an AO3 fic to my Kindle?
+Convert the AO3 HTML to EPUB here, then send the EPUB with Amazon's Send to Kindle: on the web at amazon.com/sendtokindle, from the Kindle app, or by email. Amazon converts it for your Kindle. See the step-by-step AO3 to Kindle guide.
+
+### Is my file uploaded anywhere?
+No. The converter is plain JavaScript running on this page. Your HTML file is read in your browser and the EPUB is assembled there, so it never touches a server. No ads, cookies or third-party trackers; the site only counts anonymously which website sent each visit (for example Google or Tumblr), never your files.
+
+### Can I convert HTML to EPUB online without uploading the file?
+Yes. FicToEpub works online in your browser but processes the file locally, so the HTML never leaves your device. Most other online converters upload your file to their server first.
+
+### Who is FicToEpub for, and when should I use something else?
+FicToEpub is for readers who downloaded an AO3 work as HTML and want an EPUB for an e-reader or reading app, especially on a phone or tablet where installing software isn't an option. Use Calibre instead if you already manage your library with it on a computer. Use a fic downloader if you want to fetch works by link, which FicToEpub never does. And once AO3 brings back its own EPUB and AZW3 downloads, those need no conversion at all.
+
+### Do I need Calibre?
+No. Calibre works well on a computer (add the HTML, click Convert books, choose EPUB), but this page needs no install and also works on phones and tablets.
+
+### Does this site download fics from AO3 for me?
+No, and on purpose. You download the work yourself through AO3's own button, so the author's hit count and the archive's rules stay intact. Please keep converted files for your own reading and leave kudos and comments on AO3.
+
+### Will the EPUB open on Kobo, Apple Books or Google Play Books?
+Yes. Kobo, Apple Books, Google Play Books, Boox and KOReader open the EPUB directly. Kindle readers send it with Send to Kindle first.
+
+### Can I combine a series or several fics into one EPUB?
+Yes. Add the HTML files in reading order (use the arrows to reorder), choose Merge into one book and give the book a title. Each work keeps its own chapters under its name in the table of contents.
+
+### Can I turn any HTML file or saved webpage into an EPUB?
+Yes. Any saved HTML page or story works: the converter uses the page title, and if the text has two or more section headings it splits chapters there.
+
+### What happens to images?
+Images that live on other websites can't be fetched from a file, so each one is replaced with a short note giving its description. Text, italics, footnotes and links come through.
+
+### Can I send the AO3 HTML file straight to my Kindle?
+You can, because Send to Kindle accepts HTML. But converting to EPUB first gives you a proper cover, the title and author in your Kindle library, and a chapter list you can jump around with.
+
+### Does Send to Kindle work with EPUB files?
+Yes. Amazon has accepted EPUB through Send to Kindle since 2022 and converts it to Kindle format during delivery.
+
+### Does sending fics to Kindle cost anything?
+No. FicToEpub is free, and Amazon's Send to Kindle is free for personal documents.
+
+### Can I put a whole series on my Kindle as one book?
+Yes. Add every work's HTML file to FicToEpub in reading order, choose Merge into one book, then send the single EPUB to your Kindle.
+
+### Why can't I download the AO3 EPUB or AZW3 directly?
+AO3 temporarily limited downloads to HTML while it restores features after its October–November 2026 outage. Once AO3 brings the other formats back you can download AZW3 or EPUB again; until then, convert the HTML.
+
+### Why can I only download AO3 works as HTML?
+AO3 disabled the other download formats when it reopened on 15 November 2026 after a security incident, so it could come back sooner. As of 26 November 2026 only HTML downloads work, and AO3 hasn't announced when EPUB, PDF, MOBI and AZW3 return.
+
+### Is my AO3 account or the fic broken?
+No. The limit applies to everyone. The HTML download contains the full work, with chapters, tags, summary and notes, so nothing is lost.
+
+### Why does my fic downloader or e-reader plugin say the EPUB link isn't found?
+Those tools ask AO3 for its EPUB file, which AO3 isn't offering right now. Some can be switched to HTML; otherwise download the HTML from AO3 yourself and convert it.
+
+### When will AO3 EPUB downloads come back?
+AO3 hasn't given a date. It called the disabled features temporary. This page is updated when AO3 announces a change.
+
+### Is converting the HTML allowed?
+Downloading works for personal reading is an AO3 feature, and converting your own download to another format for your e-reader is the same thing AO3's EPUB button normally does. Keep the file for your own reading and leave kudos and comments on AO3.
 
 ## Also by the same maker
 

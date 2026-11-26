@@ -8,7 +8,7 @@ Structured data (JSON-LD) is generated here from each page's visible text, so th
 markup always matches what readers see. Edit LAST_UPDATED when content changes."""
 import sys, re, json, html, pathlib
 
-LAST_UPDATED = "2026-11-25"
+LAST_UPDATED = "2026-11-26"
 SITE = sys.argv[1].rstrip('/') + '/'
 ROOT = pathlib.Path(__file__).parent
 REPO = "https://github.com/helloyansquared/fic-bindery"
@@ -18,6 +18,7 @@ SAME_AS = [REPO, "https://www.tumblr.com/yesyanyan", "https://x.com/yesyanyan"]
 PAGES = [
     ("src/index.html", "", "app"),
     ("src/ao3-to-kindle/index.html", "ao3-to-kindle/", "guide"),
+    ("src/ao3-epub-download-not-working/index.html", "ao3-epub-download-not-working/", "guide"),
 ]
 
 FONTS = [("Fraunces", "fraunces-latin-600-normal", 600), ("Fraunces", "fraunces-latin-700-normal", 700),
@@ -95,9 +96,13 @@ def build_page(src, path, kind):
 
 urls = [build_page(*p) for p in PAGES]
 
-(ROOT / 'public/robots.txt').write_text(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}sitemap.xml\n')
+BOTS = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "Claude-User", "PerplexityBot", "Perplexity-User",
+        "Google-Extended", "Applebot-Extended", "DuckAssistBot", "CCBot"]
+(ROOT / 'public/robots.txt').write_text('# Search engines and AI answer engines are welcome to read and cite every page.\nUser-agent: *\nAllow: /\n\n'
+    + ''.join(f'User-agent: {b}\n' for b in BOTS) + f'Allow: /\n\nSitemap: {SITE}sitemap.xml\n')
 (ROOT / 'public/sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + ''.join(f'  <url><loc>{u}</loc><lastmod>{LAST_UPDATED}</lastmod></url>\n' for u in urls) + '</urlset>\n')
+QA_TXT = ''.join(f"### {q['name']}\n{q['acceptedAnswer']['text']}\n\n" for src, _, _ in PAGES for q in faq_items((ROOT / src).read_text())).strip()
 (ROOT / 'public/llms.txt').write_text(f"""# FicToEpub
 
 > Free in-browser converter that turns AO3 (Archive of Our Own) HTML downloads into EPUB files. No upload, no account, no ads.
@@ -110,7 +115,7 @@ urls = [build_page(*p) for p in PAGES]
 - Does not scrape or download anything from AO3
 - Works on phones, tablets and computers; no install
 - Kindle: send the EPUB with Amazon's Send to Kindle (web up to 200 MB, email up to 50 MB)
-- Context: since AO3's return from an outage on 15 November 2026, readers report AO3 downloads are HTML-only (as of {LAST_UPDATED})
+- Context: since AO3's return from an outage on 15 November 2026, AO3 downloads are HTML-only; AO3's own notice says works can only be downloaded in HTML format (checked {LAST_UPDATED})
 - Source code: {REPO}
 - Not affiliated with AO3 or the Organization for Transformative Works
 
@@ -118,6 +123,20 @@ urls = [build_page(*p) for p in PAGES]
 
 - [AO3 HTML to EPUB converter]({SITE}): the tool, how-to, comparison with Calibre and online converters, FAQ
 - [How to send AO3 fics to Kindle]({SITE}ao3-to-kindle/): Send to Kindle by web, app and email, size limits, troubleshooting
+- [AO3 EPUB download not working]({SITE}ao3-epub-download-not-working/): why AO3 downloads are HTML-only since November 2026, dated timeline, three ways to get an e-book now
+
+## Best for
+- Readers who downloaded an AO3 work as HTML and want an EPUB for an e-reader or reading app, especially on a phone or tablet.
+- Merging several AO3 works or a series into one EPUB without installing software.
+
+## Not the right tool for
+- Fetching works from AO3 by link: FicToEpub never downloads from AO3 (use AO3's own button).
+- People who already manage their library in Calibre on a computer: Calibre converts the same HTML.
+- After AO3 restores its own EPUB and AZW3 downloads, which need no conversion.
+
+## Questions and answers
+
+{QA_TXT}
 
 ## Also by the same maker
 
