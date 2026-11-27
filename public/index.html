@@ -65,7 +65,7 @@
     "Generates a cover from the title and author",
     "Merges several works or a series into one EPUB"
    ],
-   "dateModified": "2026-11-26",
+   "dateModified": "2026-11-27",
    "publisher": {
     "@id": "https://fictoepub.yansquared.com/#org"
    },
@@ -82,7 +82,7 @@
      "name": "Why is AO3 only letting me download HTML?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Because AO3 has temporarily limited downloads to HTML while it restores features after its October–November 2026 outage. AO3 came back on November 15 after 17 days offline, and as of 26 November 2026 AO3's own notice still says works can only be downloaded in HTML format. See what changed and the dated timeline. The HTML file is perfectly good input: this page turns it into the EPUB you'd normally get."
+      "text": "Because AO3 has temporarily limited downloads to HTML while it restores features after its October–November 2026 outage. AO3 came back on November 15 after 17 days offline, and as of 27 November 2026 AO3's own notice still says works can only be downloaded in HTML format. See what changed and the dated timeline. The HTML file is perfectly good input: this page turns it into the EPUB you'd normally get."
      }
     },
     {
@@ -107,6 +107,14 @@
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "Yes. FicToEpub works online in your browser but processes the file locally, so the HTML never leaves your device. Most other online converters upload your file to their server first."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I read AO3 fics offline?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Download the work from AO3 (as of 27 November 2026 AO3 only offers HTML) and the file opens offline in any browser. For a proper book with chapters, page turns and a saved reading position, convert it to EPUB here and open it in Apple Books, Google Play Books, Kobo or KOReader, or send it to your Kindle. Downloaded files don't update, so download again when the author posts new chapters."
      }
     },
     {
@@ -344,11 +352,12 @@ footer{background:var(--cloth2);color:#cdd3f5;font-size:14px;padding:28px 0}foot
 
 <section class="band alt" id="faq"><div class="faq">
   <h2>AO3 HTML to EPUB: common questions</h2>
-  <p class="updated">Last updated 26 November 2026</p>
-  <details open id="html-only"><summary>Why is AO3 only letting me download HTML?</summary><p>Because AO3 has temporarily limited downloads to HTML while it restores features after its October–November 2026 outage. AO3 came back on November 15 after 17 days offline, and as of 26 November 2026 AO3's own notice still says works can only be downloaded in HTML format. See <a href="/ao3-epub-download-not-working/">what changed and the dated timeline</a>. The HTML file is perfectly good input: this page turns it into the EPUB you'd normally get.</p></details>
+  <p class="updated">Last updated 27 November 2026</p>
+  <details open id="html-only"><summary>Why is AO3 only letting me download HTML?</summary><p>Because AO3 has temporarily limited downloads to HTML while it restores features after its October–November 2026 outage. AO3 came back on November 15 after 17 days offline, and as of 27 November 2026 AO3's own notice still says works can only be downloaded in HTML format. See <a href="/ao3-epub-download-not-working/">what changed and the dated timeline</a>. The HTML file is perfectly good input: this page turns it into the EPUB you'd normally get.</p></details>
   <details><summary>How do I send an AO3 fic to my Kindle?</summary><p>Convert the AO3 HTML to EPUB here, then send the EPUB with Amazon's Send to Kindle: on the web at amazon.com/sendtokindle, from the Kindle app, or by email. Amazon converts it for your Kindle. See the step-by-step <a href="/ao3-to-kindle/">AO3 to Kindle guide</a>.</p></details>
   <details><summary>Is my file uploaded anywhere?</summary><p>No. The converter is plain JavaScript running on this page. Your HTML file is read in your browser and the EPUB is assembled there, so it never touches a server. No ads, cookies or third-party trackers; the site only counts anonymously which website sent each visit (for example Google or Tumblr), never your files. Those counts, and the optional “how did you find us” answer, are kept for 180 days in a Cloudflare database, with no IP address or ID (the IP address is used only briefly, in memory, to stop spam).</p></details>
   <details><summary>Can I convert HTML to EPUB online without uploading the file?</summary><p>Yes. FicToEpub works online in your browser but processes the file locally, so the HTML never leaves your device. Most other online converters upload your file to their server first.</p></details>
+  <details><summary>Can I read AO3 fics offline?</summary><p>Yes. Download the work from AO3 (as of 27 November 2026 AO3 only offers HTML) and the file opens offline in any browser. For a proper book with chapters, page turns and a saved reading position, convert it to EPUB here and open it in Apple Books, Google Play Books, Kobo or KOReader, or send it to your Kindle. Downloaded files don't update, so download again when the author posts new chapters.</p></details>
   <details><summary>Who is FicToEpub for, and when should I use something else?</summary><p>FicToEpub is for readers who downloaded an AO3 work as HTML and want an EPUB for an e-reader or reading app, especially on a phone or tablet where installing software isn't an option. Use Calibre instead if you already manage your library with it on a computer. Use a fic downloader if you want to fetch works by link, which FicToEpub never does. And once AO3 brings back its own EPUB and AZW3 downloads, those need no conversion at all.</p></details>
   <details><summary>Do I need Calibre?</summary><p>No. Calibre works well on a computer (add the HTML, click Convert books, choose EPUB), but this page needs no install and also works on phones and tablets.</p></details>
   <details><summary>Does this site download fics from AO3 for me?</summary><p>No, and on purpose. You download the work yourself through AO3's own button, so the author's hit count and the archive's rules stay intact. Please keep converted files for your own reading and leave kudos and comments on AO3.</p></details>
@@ -365,7 +374,7 @@ footer{background:var(--cloth2);color:#cdd3f5;font-size:14px;padding:28px 0}foot
 <!-- AD SLOT: after FAQ -->
 </main>
 
-<footer><div class="wrap"><p id="tipfoot" hidden style="margin:0 0 8px">Free, no ads, no cookies. <a id="tiplink" href="#" target="_blank" rel="noopener">Support FicToEpub</a></p><p style="margin:0 0 8px">Made by <a href="https://www.tumblr.com/yesyanyan">yesyanyan</a> · <a href="https://github.com/helloyansquared/fic-bindery">open source on GitHub</a> · <a href="/ao3-to-kindle/">AO3 to Kindle guide</a> · <a href="https://ficwrapped.yansquared.com/">AO3 Wrapped</a> · <a href="https://bottobook.yansquared.com/">Character.AI chats to EPUB</a> · Last updated 26 November 2026</p>FicToEpub is an independent tool and is not affiliated with Archive of Our Own or the Organization for Transformative Works. Fanworks belong to their creators — convert for personal reading only.</div></footer>
+<footer><div class="wrap"><p id="tipfoot" hidden style="margin:0 0 8px">Free, no ads, no cookies. <a id="tiplink" href="#" target="_blank" rel="noopener">Support FicToEpub</a></p><p style="margin:0 0 8px">Made by <a href="https://www.tumblr.com/yesyanyan">yesyanyan</a> · <a href="https://github.com/helloyansquared/fic-bindery">open source on GitHub</a> · <a href="/ao3-to-kindle/">AO3 to Kindle guide</a> · <a href="https://ficwrapped.yansquared.com/">AO3 Wrapped</a> · <a href="https://bottobook.yansquared.com/">Character.AI chats to EPUB</a> · Last updated 27 November 2026</p>FicToEpub is an independent tool and is not affiliated with Archive of Our Own or the Organization for Transformative Works. Fanworks belong to their creators — convert for personal reading only.</div></footer>
 
 <script src="/found.js" defer></script>
 <script id="sample" type="text/plain">

@@ -8,7 +8,7 @@ Structured data (JSON-LD) is generated here from each page's visible text, so th
 markup always matches what readers see. Edit LAST_UPDATED when content changes."""
 import sys, re, json, html, pathlib
 
-LAST_UPDATED = "2026-11-26"
+LAST_UPDATED = "2026-11-27"
 SITE = sys.argv[1].rstrip('/') + '/'
 ROOT = pathlib.Path(__file__).parent
 REPO = "https://github.com/helloyansquared/fic-bindery"
